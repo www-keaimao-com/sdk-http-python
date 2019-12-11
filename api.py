@@ -309,7 +309,10 @@ def get_friend_list(robwxid='', is_refresh=0):
     data['is_refresh'] = is_refresh  # 是否刷新列表，0 从缓存获取 / 1 刷新并获取
     result = json.dumps(data)
     try:
-        return requests.utils.unquote(requests.post(API_URL, data=result).text)
+        ret_data = requests.post(API_URL, data=result).text  # 获取数据
+        ret_json = json.loads(ret_data)  # 格式化提取数据
+        ret_list = requests.utils.unquote(ret_json["data"])  # 对获取的数据进行解码
+        return json.loads(ret_list)  # 对解码后的数据返回list
     except requests.exceptions.ConnectionError as e:
         raise ConnectionError(f"请检查当前的回复地址是否正确！ {API_URL}")
 
