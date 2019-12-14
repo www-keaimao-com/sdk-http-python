@@ -1,5 +1,9 @@
 from flask import Flask, request, jsonify
 from api import *
+import socket
+
+ip_address = socket.getfqdn(socket.gethostname())
+Local_Addr = socket.gethostbyname(ip_address)
 
 """
 【事件数值】             【事件描述】
@@ -43,7 +47,7 @@ def index():
         else:
             pass
     else:
-        return "wxbot test get page"
+        return f"GET访问测试页面，本机地址 http://{Local_Addr}"
     return jsonify({"code": 200, "data": "result ok"})
 
 
