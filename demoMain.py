@@ -1,6 +1,31 @@
 from flask import Flask, request, jsonify
 from api import *
 
+"""
+【事件数值】             【事件描述】
+
+100                       私聊消息
+
+200                       群聊消息
+
+300                       暂无
+
+400                       群成员增加
+
+410                       群成员减少
+
+500                       收到好友请求
+
+600                       二维码收款
+
+700                       收到转账
+
+800                       软件开始启动
+
+900                       新的账号登录完成
+
+910                       账号下线
+"""
 
 app = Flask(__name__)
 
@@ -17,29 +42,15 @@ def index():
         robot_wxid = request.form.get("robot_wxid")  # 当前登录的账号（机器人）标识id
         parameters = request.form.get("parameters")  # 附加参数（暂未用到，请忽略）
         ws_time = request.form.get("time")  # 请求时间(时间戳10位版本)
-        key = request.form.get("key")  # 忽略，在v2.3及以上启用了key验证才需要配这个
+        try:
+            file_url = request.form.get("file_url")  # 如果是文件消息（图片、语音、视频、动态表情），这里则是可直接访问的网络地址，非文件消息时为空
+        except:
+            raise TypeError("请使用 http-api 2.4+以上的版本")
+
         if wx_type == "100":
             send_text_msg(robot_wxid, to_wxid, "Hello")
         elif wx_type == "200":  # 群聊消息
             send_group_at_msg(robot_wxid, to_wxid, final_from_wxid, final_nickname, "Hello！请加我私聊")
-        elif wx_type == "300":  # 暂无
-            pass
-        elif wx_type == "400":  # 群成员增加
-            pass
-        elif wx_type == "410":  # 群成员减少
-            pass
-        elif wx_type == "500":  # 收到好友请求
-            pass
-        elif wx_type == "600":  # 二维码收款
-            pass
-        elif wx_type == "700":  # 收到转账
-            pass
-        elif wx_type == "800":  # 软件开始启动
-            pass
-        elif wx_type == "900":  # 新的账号登录完成
-            pass
-        elif wx_type == "910":  # 账号下线
-            pass
         else:
             pass
     else:
