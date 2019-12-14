@@ -63,6 +63,7 @@ import json
 邀请加入群聊              invite_in_group()
 """
 
+
 # 主动调用发送接口
 API_URL = "http://127.0.0.1:8073/send"
 # TODO data['msg'] = requests.utils.quote(msg)  # 发送内容 发送的信息如果出现乱码，请按照此方式修改
