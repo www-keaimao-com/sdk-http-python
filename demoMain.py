@@ -47,9 +47,9 @@ def index():
         else:
             pass
     else:
-        return f"GET访问测试页面，本机地址 http://{Local_Addr}"
+        return f"GET访问测试页面，本机地址 http://{Local_Addr}" # 此处的测试地址应该是http://localhost:8074/复制到可爱猫功能-》HTTP多语言对-》消息回调地址
     return jsonify({"code": 200, "data": "result ok"})
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8073, debug=True)
+    app.run(host="0.0.0.0", port=8074, debug=True)
