@@ -7,7 +7,6 @@
 import requests
 import json
 
-
 """
 【事件数值】             【事件描述】
 100                       私聊消息
@@ -63,9 +62,10 @@ import json
 邀请加入群聊              invite_in_group()
 """
 
-
 # 主动调用发送接口
 API_URL = "http://127.0.0.1:8073/send"
+
+
 # TODO data['msg'] = requests.utils.quote(msg)  # 发送内容 发送的信息如果出现乱码，请按照此方式修改
 
 
@@ -371,7 +371,10 @@ def get_group_member_list(robwxid, group_wxid, is_refresh=0):
     data['is_refresh'] = is_refresh  # 是否刷新列表，0 从缓存获取 / 1 刷新并获取
     result = json.dumps(data)
     try:
-        return requests.post(API_URL, data={"data": result})
+        ret_data = requests.post(API_URL, data=result).text  # 获取数据
+        ret_json = json.loads(ret_data)  # 格式化提取数据
+        ret_list = requests.utils.unquote(ret_json["data"])  # 对获取的数据进行解码
+        return json.loads(ret_list)  # 对解码后的数据返回list
     except requests.exceptions.ConnectionError as e:
         raise ConnectionError(f"请检查当前的回复地址是否正确！ {API_URL}")
 
