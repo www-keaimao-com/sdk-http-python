@@ -375,6 +375,7 @@ def get_group_member_list(robwxid, group_wxid, is_refresh=0):
         ret_json = json.loads(ret_data)  # 格式化提取数据
         ret_list = requests.utils.unquote(ret_json["data"])  # 对获取的数据进行解码
         return json.loads(ret_list)  # 对解码后的数据返回list
+
     except requests.exceptions.ConnectionError as e:
         raise ConnectionError(f"请检查当前的回复地址是否正确！ {API_URL}")
 
